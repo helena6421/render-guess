@@ -1,0 +1,54 @@
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  font-family: var(--font-sans);
+  background: var(--bg-page);
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden; /* no page scroll — all inside app */
+}
+
+#app {
+  height: 100%;
+}
+
+h1, h2, h3, h4 { margin: 0; line-height: 1.2; }
+p { margin: 0; }
+button { cursor: pointer; font-family: inherit; }
+input  { font-family: inherit; }
+a { text-decoration: none; }
+
+pre, code { font-family: var(--font-mono); }
+
+/* ── Sticker decorations ─────────────────────────────────────────────────── */
+.sticker {
+  display: inline-block;
+  padding: 4px 12px;
+  border: var(--border-black);
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 13px;
+  background: var(--color-yellow-light);
+  box-shadow: var(--shadow-hard-sm);
+}
+
+/* ── Bg blobs ────────────────────────────────────────────────────────────── */
+.bg-blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}

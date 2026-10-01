@@ -1,0 +1,68 @@
+/* ─── Design Tokens — Neo-brutalist / Funky ──────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg-page:        #fdf6e3;   /* тёплый кремовый */
+  --bg-card:        #ffffff;
+  --bg-surface:     #fffbf0;
+
+  /* Brand colours */
+  --color-violet:        #6d28d9;
+  --color-violet-bright: #7c3aed;
+  --color-violet-light:  #ede9fe;
+  --color-pink:          #db2777;
+  --color-pink-light:    #fce7f3;
+  --color-green:         #16a34a;
+  --color-green-light:   #dcfce7;
+  --color-orange:        #ea580c;
+  --color-orange-light:  #ffedd5;
+  --color-blue:          #1d4ed8;
+  --color-blue-light:    #dbeafe;
+  --color-yellow:        #ca8a04;
+  --color-yellow-light:  #fef9c3;
+
+  /* Difficulty */
+  --color-difficulty-easy:   #16a34a;
+  --color-difficulty-medium: #d97706;
+  --color-difficulty-hard:   #dc2626;
+
+  /* Text */
+  --text-primary:   #0f0f0f;
+  --text-secondary: #44403c;
+  --text-muted:     #78716c;
+
+  /* Neo-brutalist borders */
+  --border-black:  2px solid #0f0f0f;
+  --border-black3: 3px solid #0f0f0f;
+  --border-color:  #d6d3d1;
+  --border-radius-sm: 10px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 22px;
+  --border-radius-xl: 28px;
+
+  /* Hard shadows (neo-brutalism) */
+  --shadow-hard-sm:  3px 3px 0 #0f0f0f;
+  --shadow-hard-md:  4px 4px 0 #0f0f0f;
+  --shadow-hard-lg:  6px 6px 0 #0f0f0f;
+  --shadow-hard-violet: 4px 4px 0 #6d28d9;
+  --shadow-hard-pink:   4px 4px 0 #db2777;
+  --shadow-hard-green:  4px 4px 0 #16a34a;
+
+  /* Soft shadows (still used in some places) */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* Transitions */
+  --transition-fast: 100ms ease;
+  --transition-base: 180ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+  }
+}
