@@ -159,24 +159,44 @@ export const ultraEasyQuestions: Question[] = [
   },
 
   // ── UE007: font-weight ─────────────────────────────────────────────────────
-  {
+{
     id: 'UE007', topic: 'text', difficulty: 'easy',
     displayHtml: `<p class="t">Насколько жирный?</p>`,
     displayCss: `.t {
   font-size: 24px;
-  font-weight: 900;
+  font-weight: 700;
   padding: 20px;
   color: #1e293b;
 }`,
     renderWidth: 300, renderHeight: 90,
     correctVariantId: 'UE007-A',
     variants: [
-      { id: 'UE007-A', html: `<p class="t">Насколько жирный?</p>`, css: `.t{font-size:24px;font-weight:900;padding:20px;color:#1e293b;}` },
-      { id: 'UE007-B', html: `<p class="t">Насколько жирный?</p>`, css: `.t{font-size:24px;font-weight:400;padding:20px;color:#1e293b;}` },
-      { id: 'UE007-C', html: `<p class="t">Насколько жирный?</p>`, css: `.t{font-size:24px;font-weight:700;padding:20px;color:#1e293b;}` },
-      { id: 'UE007-D', html: `<p class="t">Насколько жирный?</p>`, css: `.t{font-size:24px;font-weight:100;padding:20px;color:#1e293b;}` },
+      {
+        // A (correct): bold 700
+        id: 'UE007-A',
+        html: `<p class="t">Насколько жирный?</p>`,
+        css: `.t{font-size:24px;font-weight:700;padding:20px;color:#1e293b;}`
+      },
+      {
+        // B: normal 400 — заметно тоньше
+        id: 'UE007-B',
+        html: `<p class="t">Насколько жирный?</p>`,
+        css: `.t{font-size:24px;font-weight:400;padding:20px;color:#1e293b;}`
+      },
+      {
+        // C: 400 + italic — тонкий наклонный
+        id: 'UE007-C',
+        html: `<p class="t">Насколько жирный?</p>`,
+        css: `.t{font-size:24px;font-weight:400;font-style:italic;padding:20px;color:#1e293b;}`
+      },
+      {
+        // D: 700 + markedly smaller — жирный, но мелкий
+        id: 'UE007-D',
+        html: `<p class="t">Насколько жирный?</p>`,
+        css: `.t{font-size:14px;font-weight:700;padding:20px;color:#1e293b;}`
+      },
     ],
-    explanation: 'font-weight: 900 — максимальная жирность. 400 — нормальный вес (normal). 700 — жирный (bold). 100 — тончайший.',
+    explanation: 'font-weight: 700 — жирное начертание (bold) при полном размере 24px. 400 — нормальный вес. Вариант C — нормальный вес с курсивом. Вариант D — жирный, но размер шрифта меньше (14px).',
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/font-weight',
     keyProps: ['font-weight'],
   },
@@ -210,7 +230,7 @@ p { margin: 4px 0; font-size: 15px; }`,
   },
 
   // ── UE009: display: none ───────────────────────────────────────────────────
-  {
+{
     id: 'UE009', topic: 'display', difficulty: 'easy',
     displayHtml: `<div class="wrap">
   <div class="a">Первый</div>
@@ -232,15 +252,35 @@ p { margin: 4px 0; font-size: 15px; }`,
   padding: 10px;
   margin: 6px 0;
 }`,
-    renderWidth: 300, renderHeight: 120,
+    renderWidth: 300, renderHeight: 160,
     correctVariantId: 'UE009-A',
     variants: [
-      { id: 'UE009-A', html: `<div class="wrap"><div class="a">Первый</div><div class="b">Скрытый?</div><div class="c">Третий</div></div>`, css: `.wrap{padding:10px;background:#94a3b8;width:200px;}.a,.c{background:#6366f1;color:white;padding:10px;margin:6px 0;font-weight:bold;}.b{display:none;background:#f59e0b;color:white;padding:10px;margin:6px 0;}` },
-      { id: 'UE009-B', html: `<div class="wrap"><div class="a">Первый</div><div class="b">Скрытый?</div><div class="c">Третий</div></div>`, css: `.wrap{padding:10px;background:#94a3b8;width:200px;}.a,.c{background:#6366f1;color:white;padding:10px;margin:6px 0;font-weight:bold;}.b{visibility:hidden;background:#f59e0b;color:white;padding:10px;margin:6px 0;}` },
-      { id: 'UE009-C', html: `<div class="wrap"><div class="a">Первый</div><div class="b">Скрытый?</div><div class="c">Третий</div></div>`, css: `.wrap{padding:10px;background:#94a3b8;width:200px;}.a,.c{background:#6366f1;color:white;padding:10px;margin:6px 0;font-weight:bold;}.b{opacity:0;background:#f59e0b;color:white;padding:10px;margin:6px 0;}` },
-      { id: 'UE009-D', html: `<div class="wrap"><div class="a">Первый</div><div class="b">Скрытый?</div><div class="c">Третий</div></div>`, css: `.wrap{padding:10px;background:#94a3b8;width:200px;}.a,.c{background:#6366f1;color:white;padding:10px;margin:6px 0;font-weight:bold;}.b{background:#f59e0b;color:white;padding:10px;margin:6px 0;}` },
+      {
+        // A (correct): display:none — элемента НЕТ, Первый и Третий вплотную
+        id: 'UE009-A',
+        html: `<div class="wrap"><div class="a">Первый</div><div class="b">Скрытый?</div><div class="c">Третий</div></div>`,
+        css: `.wrap{padding:10px;background:#94a3b8;width:200px;}.a,.c{background:#6366f1;color:white;padding:10px;margin:6px 0;font-weight:bold;}.b{display:none;background:#f59e0b;color:white;padding:10px;margin:6px 0;}`
+      },
+      {
+        // B: visibility:hidden — ПУСТОЕ МЕСТО между Первым и Третьим
+        id: 'UE009-B',
+        html: `<div class="wrap"><div class="a">Первый</div><div class="b">Скрытый?</div><div class="c">Третий</div></div>`,
+        css: `.wrap{padding:10px;background:#94a3b8;width:200px;}.a,.c{background:#6366f1;color:white;padding:10px;margin:6px 0;font-weight:bold;}.b{visibility:hidden;background:#f59e0b;color:white;padding:10px;margin:6px 0;}`
+      },
+      {
+        // C: opacity:0.35 — ПОЛУПРОЗРАЧНЫЙ оранжевый блок виден
+        id: 'UE009-C',
+        html: `<div class="wrap"><div class="a">Первый</div><div class="b">Скрытый?</div><div class="c">Третий</div></div>`,
+        css: `.wrap{padding:10px;background:#94a3b8;width:200px;}.a,.c{background:#6366f1;color:white;padding:10px;margin:6px 0;font-weight:bold;}.b{opacity:0.35;background:#f59e0b;color:white;padding:10px;margin:6px 0;}`
+      },
+      {
+        // D: без скрытия — ЯРКИЙ оранжевый блок полностью виден
+        id: 'UE009-D',
+        html: `<div class="wrap"><div class="a">Первый</div><div class="b">Скрытый?</div><div class="c">Третий</div></div>`,
+        css: `.wrap{padding:10px;background:#94a3b8;width:200px;}.a,.c{background:#6366f1;color:white;padding:10px;margin:6px 0;font-weight:bold;}.b{background:#f59e0b;color:white;padding:10px;margin:6px 0;font-weight:bold;}`
+      },
     ],
-    explanation: 'display: none полностью убирает элемент, места нет. visibility: hidden — элемент невидим, но место занимает (пустая белая полоса). opacity: 0 — тоже прозрачный и место занимает. Без скрытия — все 3 блока видны.',
+    explanation: 'display: none полностью убирает элемент — Первый и Третий вплотную. visibility: hidden — элемент невидим, но пустое место остаётся. opacity: 0.35 — блок полупрозрачный, но виден. Без скрытия — яркий оранжевый блок.',
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/display',
     keyProps: ['display'],
   },
@@ -573,7 +613,7 @@ p { margin: 4px 0; font-size: 15px; }`,
   },
 
   // ── UE019: overflow hidden basic ──────────────────────────────────────────
-  {
+{
     id: 'UE019', topic: 'overflow', difficulty: 'easy',
     displayHtml: `<div class="box">
   <p>Длинный текст который явно не поместится в маленький блок с overflow: hidden</p>
@@ -587,15 +627,35 @@ p { margin: 4px 0; font-size: 15px; }`,
   padding: 8px;
   font-size: 14px;
 }`,
-    renderWidth: 300, renderHeight: 100,
+    renderWidth: 300, renderHeight: 150,
     correctVariantId: 'UE019-A',
     variants: [
-      { id: 'UE019-A', html: `<div class="box"><p>Длинный текст который явно не поместится в маленький блок с overflow: hidden</p></div>`, css: `.box{width:160px;height:60px;overflow:hidden;background:#bae6fd;border:2px solid #0ea5e9;padding:8px;font-size:14px;}p{margin:0;}` },
-      { id: 'UE019-B', html: `<div class="box"><p>Длинный текст который явно не поместится в маленький блок с overflow: hidden</p></div>`, css: `.box{width:160px;height:60px;overflow:visible;background:#bae6fd;border:2px solid #0ea5e9;padding:8px;font-size:14px;}p{margin:0;}` },
-      { id: 'UE019-C', html: `<div class="box"><p>Длинный текст который явно не поместится в маленький блок с overflow: hidden</p></div>`, css: `.box{width:160px;height:60px;overflow:auto;background:#bae6fd;border:2px solid #0ea5e9;padding:8px;font-size:14px;}p{margin:0;}` },
-      { id: 'UE019-D', html: `<div class="box"><p>Длинный текст который явно не поместится в маленький блок с overflow: hidden</p></div>`, css: `.box{width:160px;height:200px;overflow:hidden;background:#bae6fd;border:2px solid #0ea5e9;padding:8px;font-size:14px;}p{margin:0;}` },
+      {
+        // A (correct): hidden — текст обрезан РОВНО по границе синего блока
+        id: 'UE019-A',
+        html: `<div class="box"><p>Длинный текст который явно не поместится в маленький блок с overflow: hidden</p></div>`,
+        css: `.box{width:160px;height:60px;overflow:hidden;background:#bae6fd;border:2px solid #0ea5e9;padding:8px;font-size:14px;}p{margin:0;}`
+      },
+      {
+        // B: visible — текст ВЫТЕКАЕТ за синий блок на белый фон
+        id: 'UE019-B',
+        html: `<div class="box"><p>Длинный текст который явно не поместится в маленький блок с overflow: hidden</p></div>`,
+        css: `.box{width:160px;height:60px;overflow:visible;background:#bae6fd;border:2px solid #0ea5e9;padding:8px;font-size:14px;}p{margin:0;}`
+      },
+      {
+        // C: height:auto — блок РАСТЁТ, весь текст внутри синего фона
+        id: 'UE019-C',
+        html: `<div class="box"><p>Длинный текст который явно не поместится в маленький блок с overflow: hidden</p></div>`,
+        css: `.box{width:160px;height:auto;overflow:hidden;background:#bae6fd;border:2px solid #0ea5e9;padding:8px;font-size:14px;}p{margin:0;}`
+      },
+      {
+        // D: nowrap — ОДНА строка, обрезана по горизонтали
+        id: 'UE019-D',
+        html: `<div class="box"><p>Длинный текст который явно не поместится в маленький блок с overflow: hidden</p></div>`,
+        css: `.box{width:160px;height:60px;overflow:hidden;background:#bae6fd;border:2px solid #0ea5e9;padding:8px;font-size:14px;white-space:nowrap;}p{margin:0;white-space:nowrap;}`
+      },
     ],
-    explanation: 'overflow: hidden — текст обрезается ровно по границе блока. visible — текст выходит за рамки (видно за границей). auto — появляется полоса прокрутки. height: 200px — блок большой, весь текст помещается.',
+    explanation: 'overflow: hidden обрезает текст ровно по границе блока (высота фиксирована 60px). visible — текст вытекает за синий блок на фон. height: auto — блок растягивается под контент, всё внутри. white-space: nowrap — одна строка, обрезанная справа.',
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/overflow',
     keyProps: ['overflow'],
   },
@@ -1063,7 +1123,7 @@ a { color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 500; }`,
   },
 
   // ── UE033: visibility hidden ──────────────────────────────────────────────
-  {
+{
     id: 'UE033', topic: 'display', difficulty: 'easy',
     displayHtml: `<div class="list">
   <div class="item">Первый</div>
@@ -1086,15 +1146,35 @@ a { color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 500; }`,
 .hidden {
   visibility: hidden;
 }`,
-    renderWidth: 300, renderHeight: 145,
+    renderWidth: 300, renderHeight: 165,
     correctVariantId: 'UE033-A',
     variants: [
-      { id: 'UE033-A', html: `<div class="list"><div class="item">Первый</div><div class="item hidden">СКРЫТЫЙ</div><div class="item">Третий</div></div>`, css: `.list{background:#a78bfa;padding:10px;width:200px;}.item{background:#7c3aed;color:white;padding:10px 14px;margin:6px 0;font-weight:bold;border-radius:6px;}.hidden{visibility:hidden;}` },
-      { id: 'UE033-B', html: `<div class="list"><div class="item">Первый</div><div class="item hidden">СКРЫТЫЙ</div><div class="item">Третий</div></div>`, css: `.list{background:#a78bfa;padding:10px;width:200px;}.item{background:#7c3aed;color:white;padding:10px 14px;margin:6px 0;font-weight:bold;border-radius:6px;}.hidden{display:none;}` },
-      { id: 'UE033-C', html: `<div class="list"><div class="item">Первый</div><div class="item hidden">СКРЫТЫЙ</div><div class="item">Третий</div></div>`, css: `.list{background:#a78bfa;padding:10px;width:200px;}.item{background:#7c3aed;color:white;padding:10px 14px;margin:6px 0;font-weight:bold;border-radius:6px;}.hidden{opacity:0;}` },
-      { id: 'UE033-D', html: `<div class="list"><div class="item">Первый</div><div class="item hidden">СКРЫТЫЙ</div><div class="item">Третий</div></div>`, css: `.list{background:#a78bfa;padding:10px;width:200px;}.item{background:#7c3aed;color:white;padding:10px 14px;margin:6px 0;font-weight:bold;border-radius:6px;}` },
+      {
+        // A (correct): visibility:hidden — пустое место между Первым и Третьим
+        id: 'UE033-A',
+        html: `<div class="list"><div class="item">Первый</div><div class="item hidden">СКРЫТЫЙ</div><div class="item">Третий</div></div>`,
+        css: `.list{background:#a78bfa;padding:10px;width:200px;}.item{background:#7c3aed;color:white;padding:10px 14px;margin:6px 0;font-weight:bold;border-radius:6px;}.hidden{visibility:hidden;}`
+      },
+      {
+        // B: display:none — элемента нет, блоки вплотную
+        id: 'UE033-B',
+        html: `<div class="list"><div class="item">Первый</div><div class="item hidden">СКРЫТЫЙ</div><div class="item">Третий</div></div>`,
+        css: `.list{background:#a78bfa;padding:10px;width:200px;}.item{background:#7c3aed;color:white;padding:10px 14px;margin:6px 0;font-weight:bold;border-radius:6px;}.hidden{display:none;}`
+      },
+      {
+        // C: opacity:0.3 — блок полупрозрачный, но ВИДЕН
+        id: 'UE033-C',
+        html: `<div class="list"><div class="item">Первый</div><div class="item hidden">СКРЫТЫЙ</div><div class="item">Третий</div></div>`,
+        css: `.list{background:#a78bfa;padding:10px;width:200px;}.item{background:#7c3aed;color:white;padding:10px 14px;margin:6px 0;font-weight:bold;border-radius:6px;}.hidden{opacity:0.3;}`
+      },
+      {
+        // D: без скрытия — все 3 блока полностью видны
+        id: 'UE033-D',
+        html: `<div class="list"><div class="item">Первый</div><div class="item hidden">СКРЫТЫЙ</div><div class="item">Третий</div></div>`,
+        css: `.list{background:#a78bfa;padding:10px;width:200px;}.item{background:#7c3aed;color:white;padding:10px 14px;margin:6px 0;font-weight:bold;border-radius:6px;}`
+      },
     ],
-    explanation: 'visibility: hidden — элемент невидим, но место сохраняется (пустая полоса между Первым и Третьим). display: none — место тоже исчезает. opacity: 0 — прозрачный, место есть. Без скрытия — все 3 видны.',
+    explanation: 'visibility: hidden — элемент невидим, но место занимает (пустая полоса). display: none — место тоже исчезает, блоки вплотную. opacity: 0.3 — блок бледный, но читаемый. Без скрытия — все три видны.',
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/visibility',
     keyProps: ['visibility'],
   },

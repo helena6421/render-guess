@@ -1671,52 +1671,52 @@ p {
 
   // Используем хелпер-функцию для не-уникальных шаблонов
   // ─── E031: font-weight ─────────────────────────────────────────────────────
-  {
+{
     id: 'E031',
     topic: 'text',
     difficulty: 'medium',
     displayHtml: `<div class="list">
-  <p class="w100">font-weight: 100</p>
-  <p class="w400">font-weight: 400</p>
-  <p class="w700">font-weight: 700</p>
-  <p class="w900">font-weight: 900</p>
+  <p class="normal">Обычный текст</p>
+  <p class="bold">Жирный текст</p>
+  <p class="normal">Снова обычный</p>
 </div>`,
     displayCss: `.list {
   background: #94a3b8;
   padding: 12px;
   width: 240px;
 }
-p { margin: 4px 0; font-size: 16px; }
-.w100 { font-weight: 100; }
-.w400 { font-weight: 400; }
-.w700 { font-weight: 700; }
-.w900 { font-weight: 900; }`,
-    renderWidth: 300,
-    renderHeight: 140,
+p { margin: 4px 0; font-size: 17px; color: #0f172a; }
+.normal { font-weight: 400; }
+.bold   { font-weight: 700; }`,
+    renderWidth: 300, renderHeight: 125,
     correctVariantId: 'E031-A',
     variants: [
       {
+        // A (correct): обычный / жирный / обычный
         id: 'E031-A',
-        html: `<div class="list"><p class="w100">font-weight: 100</p><p class="w400">font-weight: 400</p><p class="w700">font-weight: 700</p><p class="w900">font-weight: 900</p></div>`,
-        css: `.list{background:#94a3b8;padding:12px;width:240px;}p{margin:4px 0;font-size:16px;}.w100{font-weight:100;}.w400{font-weight:400;}.w700{font-weight:700;}.w900{font-weight:900;}`,
+        html: `<div class="list"><p class="normal">Обычный текст</p><p class="bold">Жирный текст</p><p class="normal">Снова обычный</p></div>`,
+        css: `.list{background:#94a3b8;padding:12px;width:240px;}p{margin:4px 0;font-size:17px;color:#0f172a;}.normal{font-weight:400;}.bold{font-weight:700;}`
       },
       {
+        // B: ВСЕ жирные
         id: 'E031-B',
-        html: `<div class="list"><p class="w100">font-weight: 100</p><p class="w400">font-weight: 400</p><p class="w700">font-weight: 700</p><p class="w900">font-weight: 900</p></div>`,
-        css: `.list{background:#94a3b8;padding:12px;width:240px;}p{margin:4px 0;font-size:16px;font-weight:900;}`,
+        html: `<div class="list"><p class="normal">Обычный текст</p><p class="bold">Жирный текст</p><p class="normal">Снова обычный</p></div>`,
+        css: `.list{background:#94a3b8;padding:12px;width:240px;}p{margin:4px 0;font-size:17px;color:#0f172a;font-weight:700;}`
       },
       {
+        // C: ВСЕ обычные
         id: 'E031-C',
-        html: `<div class="list"><p class="w100">font-weight: 100</p><p class="w400">font-weight: 400</p><p class="w700">font-weight: 700</p><p class="w900">font-weight: 900</p></div>`,
-        css: `.list{background:#94a3b8;padding:12px;width:240px;}p{margin:4px 0;font-size:16px;font-weight:400;}`,
+        html: `<div class="list"><p class="normal">Обычный текст</p><p class="bold">Жирный текст</p><p class="normal">Снова обычный</p></div>`,
+        css: `.list{background:#94a3b8;padding:12px;width:240px;}p{margin:4px 0;font-size:17px;color:#0f172a;font-weight:400;}`
       },
       {
+        // D: наоборот — жирный / обычный / жирный
         id: 'E031-D',
-        html: `<div class="list"><p>font-weight: 100</p><p>font-weight: 400</p><p>font-weight: 700</p><p>font-weight: 900</p></div>`,
-        css: `.list{background:#94a3b8;padding:12px;width:240px;}p{margin:4px 0;font-size:16px;}.list p:nth-child(1){font-weight:900;}.list p:nth-child(2){font-weight:700;}.list p:nth-child(3){font-weight:400;}.list p:nth-child(4){font-weight:100;}`,
+        html: `<div class="list"><p class="normal">Обычный текст</p><p class="bold">Жирный текст</p><p class="normal">Снова обычный</p></div>`,
+        css: `.list{background:#94a3b8;padding:12px;width:240px;}p{margin:4px 0;font-size:17px;color:#0f172a;}.normal{font-weight:700;}.bold{font-weight:400;}`
       },
     ],
-    explanation: 'font-weight задаёт жирность шрифта. 100 — тончайший, 400 — нормальный (normal), 700 — жирный (bold), 900 — наибольшая жирность. Разница заметна при наличии вариативного шрифта.',
+    explanation: 'font-weight: 400 — нормальное начертание, 700 — жирное (bold). В правильном варианте жирная только средняя строка (.bold). B — все жирные. C — все обычные. D — веса перепутаны местами: жирные крайние.',
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/font-weight',
     keyProps: ['font-weight'],
   },
@@ -1852,7 +1852,7 @@ export const easyQuestionsExtra: import('@/types').Question[] = [
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/max-width',
     keyProps: ['max-width'],
   },
-  {
+{
     id: 'E035', topic: 'text', difficulty: 'medium',
     displayHtml: `<div class="list">
   <p>Первый абзац</p>
@@ -1866,20 +1866,40 @@ export const easyQuestionsExtra: import('@/types').Question[] = [
 p {
   background: #cbd5e1;
   padding: 8px;
-  margin: 0;
-  font-size: 14px;
+  margin: 0 0 6px;
+  font-size: 15px;
   font-style: italic;
-  color: #475569;
+  color: #1e293b;
 }`,
-    renderWidth: 300, renderHeight: 110,
+    renderWidth: 300, renderHeight: 120,
     correctVariantId: 'E035-A',
     variants: [
-      { id: 'E035-A', html: `<div class="list"><p>Первый абзац</p><p>Второй абзац</p></div>`, css: `.list{width:200px;background:#94a3b8;padding:10px;}p{background:#cbd5e1;padding:8px;margin:0;font-size:14px;font-style:italic;color:#475569;}` },
-      { id: 'E035-B', html: `<div class="list"><p>Первый абзац</p><p>Второй абзац</p></div>`, css: `.list{width:200px;background:#94a3b8;padding:10px;}p{background:#cbd5e1;padding:8px;margin:0;font-size:14px;color:#475569;}` },
-      { id: 'E035-C', html: `<div class="list"><p>Первый абзац</p><p>Второй абзац</p></div>`, css: `.list{width:200px;background:#94a3b8;padding:10px;}p{background:#cbd5e1;padding:8px;margin:0;font-size:14px;font-style:oblique;color:#475569;}` },
-      { id: 'E035-D', html: `<div class="list"><p>Первый абзац</p><p>Второй абзац</p></div>`, css: `.list{width:200px;background:#94a3b8;padding:10px;}p{background:#cbd5e1;padding:8px;margin:0;font-size:14px;font-style:italic;font-weight:bold;color:#475569;}` },
+      {
+        // A (correct): italic — наклонный текст
+        id: 'E035-A',
+        html: `<div class="list"><p>Первый абзац</p><p>Второй абзац</p></div>`,
+        css: `.list{width:200px;background:#94a3b8;padding:10px;}p{background:#cbd5e1;padding:8px;margin:0 0 6px;font-size:15px;font-style:italic;color:#1e293b;}`
+      },
+      {
+        // B: normal — прямой текст
+        id: 'E035-B',
+        html: `<div class="list"><p>Первый абзац</p><p>Второй абзац</p></div>`,
+        css: `.list{width:200px;background:#94a3b8;padding:10px;}p{background:#cbd5e1;padding:8px;margin:0 0 6px;font-size:15px;font-style:normal;color:#1e293b;}`
+      },
+      {
+        // C: underline — прямой ПОДЧЁРКНУТЫЙ текст
+        id: 'E035-C',
+        html: `<div class="list"><p>Первый абзац</p><p>Второй абзац</p></div>`,
+        css: `.list{width:200px;background:#94a3b8;padding:10px;}p{background:#cbd5e1;padding:8px;margin:0 0 6px;font-size:15px;text-decoration:underline;color:#1e293b;}`
+      },
+      {
+        // D: uppercase — ЗАГЛАВНЫЕ буквы
+        id: 'E035-D',
+        html: `<div class="list"><p>Первый абзац</p><p>Второй абзац</p></div>`,
+        css: `.list{width:200px;background:#94a3b8;padding:10px;}p{background:#cbd5e1;padding:8px;margin:0 0 6px;font-size:15px;text-transform:uppercase;color:#1e293b;}`
+      },
     ],
-    explanation: 'font-style: italic делает текст курсивным (если есть italic-шрифт) или наклонным. oblique — искусственно наклоняет обычный шрифт. normal — прямое начертание.',
+    explanation: 'font-style: italic — наклонное (курсивное) начертание. normal — прямое. text-decoration: underline — подчёркивание (не наклон!). text-transform: uppercase — все буквы заглавные. Это разные свойства с разными эффектами.',
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/font-style',
     keyProps: ['font-style'],
   },
@@ -2059,7 +2079,7 @@ p {
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/gradient/linear-gradient',
     keyProps: ['background'],
   },
-  {
+{
     id: 'E041', topic: 'display', difficulty: 'medium',
     displayHtml: `<div class="parent">
   <div class="hidden">Скрытый</div>
@@ -2077,15 +2097,36 @@ p {
 .hidden    { display: none; background: #dc2626; color: white; padding: 8px; font-weight: bold; }
 .invisible { visibility: hidden; background: #f59e0b; color: white; padding: 8px; font-weight: bold; }
 .normal    { background: #16a34a; color: white; padding: 8px; font-weight: bold; }`,
-    renderWidth: 300, renderHeight: 100,
+    renderWidth: 300, renderHeight: 130,
     correctVariantId: 'E041-A',
     variants: [
-      { id: 'E041-A', html: `<div class="parent"><div class="hidden">Скрытый</div><div class="invisible">Невидимый</div><div class="normal">Нормальный</div></div>`, css: `.parent{background:#94a3b8;padding:10px;width:220px;display:flex;flex-direction:column;gap:6px;}.hidden{display:none;background:#dc2626;color:white;padding:8px;font-weight:bold;}.invisible{visibility:hidden;background:#f59e0b;color:white;padding:8px;font-weight:bold;}.normal{background:#16a34a;color:white;padding:8px;font-weight:bold;}` },
-      { id: 'E041-B', html: `<div class="parent"><div class="hidden">Скрытый</div><div class="invisible">Невидимый</div><div class="normal">Нормальный</div></div>`, css: `.parent{background:#94a3b8;padding:10px;width:220px;display:flex;flex-direction:column;gap:6px;}.hidden{opacity:0;background:#dc2626;color:white;padding:8px;font-weight:bold;}.invisible{visibility:hidden;background:#f59e0b;color:white;padding:8px;font-weight:bold;}.normal{background:#16a34a;color:white;padding:8px;font-weight:bold;}` },
-      { id: 'E041-C', html: `<div class="parent"><div class="hidden">Скрытый</div><div class="invisible">Невидимый</div><div class="normal">Нормальный</div></div>`, css: `.parent{background:#94a3b8;padding:10px;width:220px;display:flex;flex-direction:column;gap:6px;}.hidden{opacity:0;background:#dc2626;color:white;padding:8px;font-weight:bold;}.invisible{opacity:0;background:#f59e0b;color:white;padding:8px;font-weight:bold;}.normal{background:#16a34a;color:white;padding:8px;font-weight:bold;}` },
-      { id: 'E041-D', html: `<div class="parent"><div class="hidden">Скрытый</div><div class="invisible">Невидимый</div><div class="normal">Нормальный</div></div>`, css: `.parent{background:#94a3b8;padding:10px;width:220px;display:flex;flex-direction:column;gap:6px;}.hidden{background:#dc2626;color:white;padding:8px;font-weight:bold;}.invisible{background:#f59e0b;color:white;padding:8px;font-weight:bold;}.normal{background:#16a34a;color:white;padding:8px;font-weight:bold;}` },
+      {
+        // A (correct): hidden исчез, invisible — пустое место, normal виден
+        // Итого: [пустое место] + [зелёный]
+        id: 'E041-A',
+        html: `<div class="parent"><div class="hidden">Скрытый</div><div class="invisible">Невидимый</div><div class="normal">Нормальный</div></div>`,
+        css: `.parent{background:#94a3b8;padding:10px;width:220px;display:flex;flex-direction:column;gap:6px;}.hidden{display:none;background:#dc2626;color:white;padding:8px;font-weight:bold;}.invisible{visibility:hidden;background:#f59e0b;color:white;padding:8px;font-weight:bold;}.normal{background:#16a34a;color:white;padding:8px;font-weight:bold;}`
+      },
+      {
+        // B: все три видны — красный, оранжевый, зелёный
+        id: 'E041-B',
+        html: `<div class="parent"><div class="hidden">Скрытый</div><div class="invisible">Невидимый</div><div class="normal">Нормальный</div></div>`,
+        css: `.parent{background:#94a3b8;padding:10px;width:220px;display:flex;flex-direction:column;gap:6px;}.hidden{background:#dc2626;color:white;padding:8px;font-weight:bold;}.invisible{background:#f59e0b;color:white;padding:8px;font-weight:bold;}.normal{background:#16a34a;color:white;padding:8px;font-weight:bold;}`
+      },
+      {
+        // C: оба скрыты через display:none — только зелёный, вплотную к верху
+        id: 'E041-C',
+        html: `<div class="parent"><div class="hidden">Скрытый</div><div class="invisible">Невидимый</div><div class="normal">Нормальный</div></div>`,
+        css: `.parent{background:#94a3b8;padding:10px;width:220px;display:flex;flex-direction:column;gap:6px;}.hidden{display:none;background:#dc2626;color:white;padding:8px;font-weight:bold;}.invisible{display:none;background:#f59e0b;color:white;padding:8px;font-weight:bold;}.normal{background:#16a34a;color:white;padding:8px;font-weight:bold;}`
+      },
+      {
+        // D: hidden полупрозрачный (виден бледно-красный), invisible — пустое место
+        id: 'E041-D',
+        html: `<div class="parent"><div class="hidden">Скрытый</div><div class="invisible">Невидимый</div><div class="normal">Нормальный</div></div>`,
+        css: `.parent{background:#94a3b8;padding:10px;width:220px;display:flex;flex-direction:column;gap:6px;}.hidden{opacity:0.35;background:#dc2626;color:white;padding:8px;font-weight:bold;}.invisible{visibility:hidden;background:#f59e0b;color:white;padding:8px;font-weight:bold;}.normal{background:#16a34a;color:white;padding:8px;font-weight:bold;}`
+      },
     ],
-    explanation: 'display: none убирает элемент из потока — место не сохраняется. visibility: hidden скрывает, но место остаётся (виден gap между gap-ами). opacity: 0 — тоже место сохраняется, но содержимое прозрачно.',
+    explanation: 'display: none убирает красный блок полностью (нет места). visibility: hidden скрывает оранжевый, но оставляет пустое место. Итог A: пустое место + зелёный. B — все видны. C — оба скрыты без места. D — красный полупрозрачен.',
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/display',
     keyProps: ['display', 'visibility'],
   },

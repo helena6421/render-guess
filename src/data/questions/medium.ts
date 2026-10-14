@@ -715,7 +715,7 @@ p { margin: 0; font-size: 13px; }
   },
 
   // ─── M020: overflow hidden clips absolute children ────────────────────────
-  {
+{
     id: 'M020', topic: 'overflow', difficulty: 'hard',
     displayHtml: `<div class="parent">
   <div class="child">Вылезает?</div>
@@ -745,12 +745,33 @@ p { margin: 0; font-size: 13px; }
     renderWidth: 300, renderHeight: 120,
     correctVariantId: 'M020-A',
     variants: [
-      { id: 'M020-A', html: `<div class="parent"><div class="child">Вылезает?</div></div>`, css: `.parent{position:relative;overflow:hidden;width:160px;height:80px;background:#7dd3fc;border:2px solid #0ea5e9;}.child{position:absolute;top:20px;left:100px;width:120px;height:50px;background:#0369a1;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;}` },
-      { id: 'M020-B', html: `<div class="parent"><div class="child">Вылезает?</div></div>`, css: `.parent{position:relative;overflow:visible;width:160px;height:80px;background:#7dd3fc;border:2px solid #0ea5e9;}.child{position:absolute;top:20px;left:100px;width:120px;height:50px;background:#0369a1;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;}` },
-      { id: 'M020-C', html: `<div class="parent"><div class="child">Вылезает?</div></div>`, css: `.parent{overflow:hidden;width:160px;height:80px;background:#7dd3fc;border:2px solid #0ea5e9;}.child{position:absolute;top:20px;left:100px;width:120px;height:50px;background:#0369a1;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;}` },
-      { id: 'M020-D', html: `<div class="parent"><div class="child">Вылезает?</div></div>`, css: `.parent{position:relative;overflow:auto;width:160px;height:80px;background:#7dd3fc;border:2px solid #0ea5e9;}.child{position:absolute;top:20px;left:100px;width:120px;height:50px;background:#0369a1;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;}` },
+      {
+        // A (correct): overflow:hidden + position:relative → child ОБРЕЗАН на границе
+        id: 'M020-A',
+        html: `<div class="parent"><div class="child">Вылезает?</div></div>`,
+        css: `.parent{position:relative;overflow:hidden;width:160px;height:80px;background:#7dd3fc;border:2px solid #0ea5e9;}.child{position:absolute;top:20px;left:100px;width:120px;height:50px;background:#0369a1;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;}`
+      },
+      {
+        // B: overflow:visible → child ПОЛНОСТЬЮ виден за границей
+        id: 'M020-B',
+        html: `<div class="parent"><div class="child">Вылезает?</div></div>`,
+        css: `.parent{position:relative;overflow:visible;width:160px;height:80px;background:#7dd3fc;border:2px solid #0ea5e9;}.child{position:absolute;top:20px;left:100px;width:120px;height:50px;background:#0369a1;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;}`
+      },
+      {
+        // C: НЕТ position у parent → containing block = viewport iframe,
+        // child позиционируется от угла рендера, overflow не режет его
+        id: 'M020-C',
+        html: `<div class="parent"><div class="child">Вылезает?</div></div>`,
+        css: `.parent{overflow:hidden;width:160px;height:80px;background:#7dd3fc;border:2px solid #0ea5e9;margin-left:40px;}.child{position:absolute;top:20px;left:100px;width:120px;height:50px;background:#0369a1;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;}`
+      },
+      {
+        // D: child НЕ absolute → стоит в потоке ВНУТРИ parent, обрезан по высоте
+        id: 'M020-D',
+        html: `<div class="parent"><div class="child">Вылезает?</div></div>`,
+        css: `.parent{position:relative;overflow:hidden;width:160px;height:80px;background:#7dd3fc;border:2px solid #0ea5e9;}.child{margin-top:20px;margin-left:20px;width:120px;height:50px;background:#0369a1;color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:13px;}`
+      },
     ],
-    explanation: 'overflow: hidden обрезает абсолютно позиционированных потомков в пределах containing block (здесь — .parent с position: relative). Без position у .parent (вариант C) — overflow: hidden не обрезает absolute-дочерних.',
+    explanation: 'overflow: hidden обрезает absolute-потомков только если у родителя есть position (A — child обрезан). visible — child виден целиком за границей (B). Без position у родителя (C) — child позиционируется от viewport, overflow родителя его не режет. Не-absolute child (D) — стоит в потоке внутри.',
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/overflow',
     keyProps: ['overflow', 'position'],
   },
@@ -784,7 +805,7 @@ p { margin: 0; font-size: 13px; }
   },
 
   // ─── M022: flex min-width: auto ───────────────────────────────────────────
-  {
+{
     id: 'M022', topic: 'flexbox', difficulty: 'hard',
     displayHtml: `<div class="row">
   <div class="item">Фиксированный</div>
@@ -815,15 +836,36 @@ p { margin: 0; font-size: 13px; }
   white-space: nowrap;
   width: auto;
 }`,
-    renderWidth: 300, renderHeight: 90,
+    renderWidth: 300, renderHeight: 140,
     correctVariantId: 'M022-A',
     variants: [
-      { id: 'M022-A', html: `<div class="row"><div class="item">Фиксированный</div><div class="item shrink">Очень длинный текст который должен усохнуть</div></div>`, css: `.row{display:flex;width:260px;gap:8px;background:#94a3b8;padding:6px;}.item{background:#475569;color:white;padding:10px 8px;font-size:12px;flex-shrink:0;width:100px;}.shrink{flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:auto;}` },
-      { id: 'M022-B', html: `<div class="row"><div class="item">Фиксированный</div><div class="item shrink">Очень длинный текст который должен усохнуть</div></div>`, css: `.row{display:flex;width:260px;gap:8px;background:#94a3b8;padding:6px;}.item{background:#475569;color:white;padding:10px 8px;font-size:12px;flex-shrink:0;width:100px;}.shrink{flex-shrink:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:auto;}` },
-      { id: 'M022-C', html: `<div class="row"><div class="item">Фиксированный</div><div class="item shrink">Очень длинный текст который должен усохнуть</div></div>`, css: `.row{display:flex;width:260px;gap:8px;background:#94a3b8;padding:6px;}.item{background:#475569;color:white;padding:10px 8px;font-size:12px;width:100px;}.shrink{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:auto;}` },
-      { id: 'M022-D', html: `<div class="row"><div class="item">Фиксированный</div><div class="item shrink">Очень длинный текст который должен усохнуть</div></div>`, css: `.row{display:flex;width:260px;gap:8px;background:#94a3b8;padding:6px;}.item{background:#475569;color:white;padding:10px 8px;font-size:12px;flex-shrink:0;width:100px;}.shrink{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}` },
+      {
+        // A (correct): min-width:0 → сжимается, текст с «…», всё в сером контейнере
+        id: 'M022-A',
+        html: `<div class="row"><div class="item">Фиксированный</div><div class="item shrink">Очень длинный текст который должен усохнуть</div></div>`,
+        css: `.row{display:flex;width:260px;gap:8px;background:#94a3b8;padding:6px;}.item{background:#475569;color:white;padding:10px 8px;font-size:12px;flex-shrink:0;width:100px;}.shrink{flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:auto;}`
+      },
+      {
+        // B: БЕЗ min-width:0 → min-width:auto → элемент НЕ СЖИМАЕТСЯ,
+        // длинный текст вытекает далеко за правый край серого контейнера
+        id: 'M022-B',
+        html: `<div class="row"><div class="item">Фиксированный</div><div class="item shrink">Очень длинный текст который должен усохнуть</div></div>`,
+        css: `.row{display:flex;width:260px;gap:8px;background:#94a3b8;padding:6px;}.item{background:#475569;color:white;padding:10px 8px;font-size:12px;flex-shrink:0;width:100px;}.shrink{flex-shrink:1;white-space:nowrap;width:auto;}`
+      },
+      {
+        // C: white-space:normal → текст ПЕРЕНОСИТСЯ на несколько строк — ВЫСОКИЙ блок
+        id: 'M022-C',
+        html: `<div class="row"><div class="item">Фиксированный</div><div class="item shrink">Очень длинный текст который должен усохнуть</div></div>`,
+        css: `.row{display:flex;width:260px;gap:8px;background:#94a3b8;padding:6px;}.item{background:#475569;color:white;padding:10px 8px;font-size:12px;flex-shrink:0;width:100px;}.shrink{flex-shrink:1;min-width:0;white-space:normal;width:auto;}`
+      },
+      {
+        // D: flex-wrap:wrap на контейнере → длинный блок переносится на ВТОРУЮ СТРОКУ
+        id: 'M022-D',
+        html: `<div class="row"><div class="item">Фиксированный</div><div class="item shrink">Очень длинный текст который должен усохнуть</div></div>`,
+        css: `.row{display:flex;flex-wrap:wrap;width:260px;gap:8px;background:#94a3b8;padding:6px;}.item{background:#475569;color:white;padding:10px 8px;font-size:12px;flex-shrink:0;width:100px;}.shrink{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;}`
+      },
     ],
-    explanation: 'По умолчанию min-width у flex-элемента = auto (ширина контента), что мешает сжатию ниже контентной ширины. min-width: 0 снимает это ограничение — элемент сжимается до нуля, text-overflow срабатывает.',
+    explanation: 'min-width: 0 позволяет flex-элементу сжиматься ниже контентной ширины — текст обрезается с «…». Без min-width:0 (min-width:auto по умолчанию) элемент НЕ сжимается и вытекает за контейнер. white-space:normal — текст переносится в несколько строк. flex-wrap — блок уходит на вторую строку.',
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/min-width',
     keyProps: ['min-width', 'flex-shrink'],
   },
@@ -1073,7 +1115,7 @@ export const mediumQuestionsExtra: Question[] = [
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/flex',
     keyProps: ['flex', 'flex-basis'],
   },
-  {
+{
     id: 'M029', topic: 'overflow', difficulty: 'hard',
     displayHtml: `<div class="list">
   <div class="item">Элемент 1</div>
@@ -1090,26 +1132,45 @@ export const mediumQuestionsExtra: Question[] = [
   overflow-x: hidden;
   border: 2px solid #6366f1;
   border-radius: 8px;
-  background: #a78bfa;
+  background: #a5b4fc;
 }
 .item {
   padding: 10px 14px;
-  border-bottom: 1px solid #a5b4fc;
+  border-bottom: 1px solid #c7d2fe;
   font-size: 14px;
   background: white;
-}
-.item:last-child { border-bottom: none; }`,
-    renderWidth: 300, renderHeight: 160,
+}`,
+    renderWidth: 300, renderHeight: 290,
     correctVariantId: 'M029-A',
-        variants: [
-      { id: 'M029-A', html: `<div class="list"><div class="item">Элемент 1</div><div class="item">Элемент 2</div><div class="item">Элемент 3</div><div class="item">Элемент 4</div><div class="item">Элемент 5</div><div class="item">Элемент 6</div></div>`, css: `.list{width:200px;background:#a78bfa;border:2px solid #6366f1;border-radius:8px;}.item{padding:10px 14px;border-bottom:1px solid #a5b4fc;font-size:14px;background:white;}.list{height:120px;overflow-y:auto;overflow-x:hidden;}` },
-      { id: 'M029-B', html: `<div class="list"><div class="item">Элемент 1</div><div class="item">Элемент 2</div><div class="item">Элемент 3</div><div class="item">Элемент 4</div><div class="item">Элемент 5</div><div class="item">Элемент 6</div></div>`, css: `.list{width:200px;background:#a78bfa;border:2px solid #6366f1;border-radius:8px;}.item{padding:10px 14px;border-bottom:1px solid #a5b4fc;font-size:14px;background:white;}.list{height:120px;overflow-y:hidden;overflow-x:hidden;}` },
-      { id: 'M029-C', html: `<div class="list"><div class="item">Элемент 1</div><div class="item">Элемент 2</div><div class="item">Элемент 3</div><div class="item">Элемент 4</div><div class="item">Элемент 5</div><div class="item">Элемент 6</div></div>`, css: `.list{width:200px;background:#a78bfa;border:2px solid #6366f1;border-radius:8px;}.item{padding:10px 14px;border-bottom:1px solid #a5b4fc;font-size:14px;background:white;}.list{height:auto;overflow-y:auto;overflow-x:hidden;}` },
-      { id: 'M029-D', html: `<div class="list"><div class="item">Элемент 1</div><div class="item">Элемент 2</div><div class="item">Элемент 3</div><div class="item">Элемент 4</div><div class="item">Элемент 5</div><div class="item">Элемент 6</div></div>`, css: `.list{width:200px;background:#a78bfa;border:2px solid #6366f1;border-radius:8px;}.item{padding:10px 14px;border-bottom:1px solid #a5b4fc;font-size:14px;background:white;}.list{height:300px;overflow-y:scroll;overflow-x:hidden;}` },
+    variants: [
+      {
+        // A (correct): height:120 + overflow-y:auto → видно ~3 элемента, обрезано по рамке
+        id: 'M029-A',
+        html: `<div class="list"><div class="item">Элемент 1</div><div class="item">Элемент 2</div><div class="item">Элемент 3</div><div class="item">Элемент 4</div><div class="item">Элемент 5</div><div class="item">Элемент 6</div></div>`,
+        css: `.list{width:200px;height:120px;overflow-y:auto;overflow-x:hidden;border:2px solid #6366f1;border-radius:8px;background:#a5b4fc;}.item{padding:10px 14px;border-bottom:1px solid #c7d2fe;font-size:14px;background:white;}`
+      },
+      {
+        // B: height:auto → ВСЕ 6 элементов видны, высокий список
+        id: 'M029-B',
+        html: `<div class="list"><div class="item">Элемент 1</div><div class="item">Элемент 2</div><div class="item">Элемент 3</div><div class="item">Элемент 4</div><div class="item">Элемент 5</div><div class="item">Элемент 6</div></div>`,
+        css: `.list{width:200px;height:auto;overflow-y:auto;overflow-x:hidden;border:2px solid #6366f1;border-radius:8px;background:#a5b4fc;}.item{padding:10px 14px;border-bottom:1px solid #c7d2fe;font-size:14px;background:white;}`
+      },
+      {
+        // C: height:120 + overflow:visible → элементы ВЫТЕКАЮТ за рамку (рамка на 120px, белые блоки ниже)
+        id: 'M029-C',
+        html: `<div class="list"><div class="item">Элемент 1</div><div class="item">Элемент 2</div><div class="item">Элемент 3</div><div class="item">Элемент 4</div><div class="item">Элемент 5</div><div class="item">Элемент 6</div></div>`,
+        css: `.list{width:200px;height:120px;overflow:visible;border:2px solid #6366f1;border-radius:8px;background:#a5b4fc;}.item{padding:10px 14px;border-bottom:1px solid #c7d2fe;font-size:14px;background:white;}`
+      },
+      {
+        // D: height:60px — совсем маленький список, виден ~1.5 элемента
+        id: 'M029-D',
+        html: `<div class="list"><div class="item">Элемент 1</div><div class="item">Элемент 2</div><div class="item">Элемент 3</div><div class="item">Элемент 4</div><div class="item">Элемент 5</div><div class="item">Элемент 6</div></div>`,
+        css: `.list{width:200px;height:60px;overflow-y:auto;overflow-x:hidden;border:2px solid #6366f1;border-radius:8px;background:#a5b4fc;}.item{padding:10px 14px;border-bottom:1px solid #c7d2fe;font-size:14px;background:white;}`
+      },
     ],
-    explanation: 'overflow-y: auto добавляет полосу прокрутки только при необходимости (контент > высота). 6 элементов × ~41px > 120px — скроллбар появится. overflow-y: scroll — скроллбар виден всегда.',
+    explanation: 'height: 120px + overflow-y: auto — список фиксированной высоты, контент прокручивается (видно ~3 элемента). height: auto — список растёт, видны все 6. overflow: visible — элементы вытекают за рамку (рамка остаётся 120px). height: 60px — видно только полтора элемента.',
     docUrl: 'https://developer.mozilla.org/ru/docs/Web/CSS/overflow-y',
-    keyProps: ['overflow-y'],
+    keyProps: ['overflow-y', 'height'],
   },
   {
     id: 'M030', topic: 'text', difficulty: 'hard',
